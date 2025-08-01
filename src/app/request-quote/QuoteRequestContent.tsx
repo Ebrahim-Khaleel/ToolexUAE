@@ -21,7 +21,7 @@ export default function QuoteRequestContent() {
         </nav>
         
         {/* Back Button */}
-        <Link href="/cart" className="inline-flex items-center text-orange-400 hover:text-orange-300 mb-6">
+        <Link href="/cart" className="inline-flex items-center text-blue-100 hover:text-blue-300 mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
           Back to Cart
         </Link>
