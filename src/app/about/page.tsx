@@ -5,8 +5,23 @@ import Image from "next/image";
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "About Us - ToolexUAE",
-  description: "Learn more about ToolexUAE's mission and team.",
+  title: "About Us | ToolexUAE",
+  description: "Learn more about ToolexUAE and how we serve the UAE industrial sector with quality equipment.",
+  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+  alternates: {
+    canonical: "https://www.toolexuae.com/about",
+  },
+  openGraph: {
+    title: "About Us | ToolexUAE",
+    description: "Learn more about ToolexUAE and our mission.",
+    url: "https://www.toolexuae.com/about",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About Us | ToolexUAE",
+    description: "Learn more about ToolexUAE and our mission.",
+  },
 };
 
 export default function About() {

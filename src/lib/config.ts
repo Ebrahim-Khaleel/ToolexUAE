@@ -24,7 +24,7 @@ const config: Config = {
     projectId: process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || '3xocruq4',
     dataset: process.env.NEXT_PUBLIC_SANITY_DATASET || 'production',
     apiVersion: process.env.NEXT_PUBLIC_SANITY_API_VERSION || '2025-06-16',
-    token: process.env.NEXT_PUBLIC_SANITY_TOKEN,
+    token: process.env.SANITY_TOKEN,
   },
   web3forms: {
     accessKey: process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || '8ef43672-b181-45b1-a57d-06ca34843a42',

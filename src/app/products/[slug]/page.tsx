@@ -17,9 +17,9 @@ export async function generateMetadata({
   params 
 }: { 
   params: Promise<{ slug: string }> 
-}): Promise<Metadata | undefined> {
+}): Promise<Metadata> {
   const { slug } = await params;
-  const product: Product = await client.fetch(
+  const product: Product | null = await client.fetch(
     `*[_type == "product" && slug.current == $slug][0]{
       name, description, "imageUrl": image.asset->url
     }`,
@@ -27,16 +27,31 @@ export async function generateMetadata({
   );
 
   if (!product) {
-    return { title: "Product Not Found" };
+    return {
+      title: "Product Not Found | ToolexUAE",
+      description: "This product could not be found.",
+    };
   }
 
   return {
     title: `${product.name} | ToolexUAE`,
-    description: product.description,
+    description: product.description || `${product.name} - Available at ToolexUAE`,
     openGraph: {
       title: `${product.name} | ToolexUAE`,
-      description: product.description,
+      description: product.description || `${product.name} - Available at ToolexUAE`,
       images: product.imageUrl ? [product.imageUrl] : [],
+      type: "website",
+      url: `https://www.toolexuae.com/products/${slug}`,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${product.name} | ToolexUAE`,
+      description: product.description || `${product.name} - Available at ToolexUAE`,
+      images: product.imageUrl ? [product.imageUrl] : [],
+    },
+    robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    alternates: {
+      canonical: `https://www.toolexuae.com/products/${slug}`,
     },
   };
 }

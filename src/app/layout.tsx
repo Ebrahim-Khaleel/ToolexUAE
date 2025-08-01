@@ -8,9 +8,13 @@ import { Suspense } from "react";
 export const metadata: Metadata = {
   title: "ToolexUAE - Professional Equipment & Tools Platform",
   description: "Quality industrial equipment and professional tools. Same-day delivery across UAE with full warranty support.",
-  keywords: "industrial equipment, professional tools, UAE, machinery, construction tools",
-  authors: [{ name: "ToolexUAE" }],
-  // Favicon is automatically handled by Next.js 13+ with the file at /app/favicon.ico
+  metadataBase: new URL("https://www.toolexuae.com"),
+  alternates: {
+    canonical: "https://www.toolexuae.com",
+  },
+  verification: {
+    google: "cA3AzunsU5kFU7PQwlttuDzOMMkqsKclyhSHpaENa2c",
+  },
 };
 
 export const viewport = {
