@@ -4,8 +4,32 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Product } from "@/types";
 import { ProductDetailClient } from "@/components/ProductDetailClient";
-import { Metadata } from "next";
+import type { Metadata } from "next";
 
+/* ---------------------------
+   Utility: normalize/validate params
+   --------------------------- */
+type ParamsShape = { slug: string };
+
+async function resolveParams(maybe: unknown): Promise<ParamsShape> {
+  const candidate = (maybe as { params?: unknown })?.params ?? maybe;
+  const resolved = await Promise.resolve(candidate) as unknown;
+
+  if (
+    typeof resolved === "object" &&
+    resolved !== null &&
+    "slug" in (resolved as Record<string, unknown>) &&
+    typeof (resolved as Record<string, unknown>).slug === "string"
+  ) {
+    return { slug: (resolved as Record<string, unknown>).slug as string };
+  }
+
+  throw new Error("Missing or invalid route params (expected { slug: string })");
+}
+
+/* ---------------------------
+   Static params for SSG
+   --------------------------- */
 export async function generateStaticParams() {
   const slugs: { slug: string }[] = await client.fetch(
     `*[_type == "product" && defined(slug.current)]{ "slug": slug.current }`
@@ -13,15 +37,26 @@ export async function generateStaticParams() {
   return slugs.map((p) => ({ slug: p.slug }));
 }
 
-export async function generateMetadata({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
-}): Promise<Metadata> {
-  const { slug } = await params;
-  const product: Product | null = await client.fetch(
+/* ---------------------------
+   Metadata: typed, no parent param
+   --------------------------- */
+export async function generateMetadata(props: unknown): Promise<Metadata> {
+  const { slug } = await resolveParams(props);
+
+  const product = await client.fetch(
     `*[_type == "product" && slug.current == $slug][0]{
-      name, description, "imageUrl": image.asset->url
+      name,
+      description,
+      "imageUrl": image.asset->url,
+      seo {
+        metaTitle,
+        metaDescription,
+        canonicalUrl,
+        robots,
+        openGraphImage { asset->{ url } },
+        openGraphTitle,
+        openGraphDescription
+      }
     }`,
     { slug }
   );
@@ -30,38 +65,44 @@ export async function generateMetadata({
     return {
       title: "Product Not Found | ToolexUAE",
       description: "This product could not be found.",
+      robots: "noindex, nofollow",
     };
   }
 
+  const title = product.seo?.metaTitle || `${product.name} | ToolexUAE`;
+  const description = product.seo?.metaDescription || product.description || `${product.name} | ToolexUAE`;
+  const imageUrl = product.seo?.openGraphImage?.asset?.url || product.imageUrl || "";
+  const robotsConfig = product.seo?.robots || "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1";
+
   return {
-    title: `${product.name} | ToolexUAE`,
-    description: product.description || `${product.name} - Available at ToolexUAE`,
+    title,
+    description,
     openGraph: {
-      title: `${product.name} | ToolexUAE`,
-      description: product.description || `${product.name} - Available at ToolexUAE`,
-      images: product.imageUrl ? [product.imageUrl] : [],
+      title: product.seo?.openGraphTitle || title,
+      description: product.seo?.openGraphDescription || description,
+      images: imageUrl ? [imageUrl] : [],
       type: "website",
       url: `https://www.toolexuae.com/products/${slug}`,
     },
     twitter: {
       card: "summary_large_image",
-      title: `${product.name} | ToolexUAE`,
-      description: product.description || `${product.name} - Available at ToolexUAE`,
-      images: product.imageUrl ? [product.imageUrl] : [],
+      title,
+      description,
+      images: imageUrl ? [imageUrl] : [],
     },
-    robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
+    robots: robotsConfig,
     alternates: {
-      canonical: `https://www.toolexuae.com/products/${slug}`,
+      canonical: product.seo?.canonicalUrl || `https://www.toolexuae.com/products/${slug}`,
     },
   };
 }
 
-export default async function ProductDetailPage({ 
-  params 
-}: { 
-  params: Promise<{ slug: string }> 
-}) {
-  const { slug } = await params;
+/* ---------------------------
+   Page component: flexible props, normalized params
+   --------------------------- */
+export default async function ProductDetailPage(props: unknown) {
+  const { slug } = await resolveParams(props);
+
   const product: Product | null = await client.fetch(
     `*[_type == "product" && slug.current == $slug][0]{
       _id,
@@ -72,11 +113,7 @@ export default async function ProductDetailPage({
       inStock,
       specifications,
       slug,
-      dataSheet {
-        asset-> {
-          url
-        }
-      }
+      dataSheet { asset->{ url } }
     }`,
     { slug }
   );
@@ -97,7 +134,6 @@ export default async function ProductDetailPage({
             Back to Products
           </Link>
         </div>
-
         <ProductDetailClient product={product} />
       </div>
     </div>

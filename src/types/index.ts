@@ -15,6 +15,15 @@ export interface Product {
       url: string;
     };
   }
+  seo?: {
+    metaTitle?: string;
+    metaDescription?: string;
+    canonicalUrl?: string;
+    robots?: string;
+    openGraphImage?: { asset: { url: string } };
+    openGraphTitle?: string;
+    openGraphDescription?: string;
+  };
 }
 
 export interface CartItem {
