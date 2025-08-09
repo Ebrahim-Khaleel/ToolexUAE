@@ -11,6 +11,9 @@ import type { Metadata } from "next";
    --------------------------- */
 type ParamsShape = { slug: string };
 
+// Disable caching for this page
+export const revalidate = 0;
+
 async function resolveParams(maybe: unknown): Promise<ParamsShape> {
   const candidate = (maybe as { params?: unknown })?.params ?? maybe;
   const resolved = await Promise.resolve(candidate) as unknown;
@@ -60,6 +63,8 @@ export async function generateMetadata(props: unknown): Promise<Metadata> {
     }`,
     { slug }
   );
+
+  console.log("Product:", product);
 
   if (!product) {
     return {
