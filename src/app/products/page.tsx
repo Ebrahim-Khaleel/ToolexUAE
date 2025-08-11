@@ -1,27 +1,11 @@
 import { client } from "@/lib/sanity";
 import type { Product } from "@/types";
-import { Metadata } from "next";
 import ProductsContent from "./ProductsContent";
+import { getPageSeo } from "@/lib/getPageSeo";
 
-export const metadata: Metadata = {
-  title: "Products | ToolexUAE",
-  description: "Browse all products available at ToolexUAE.",
-  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  alternates: {
-    canonical: "https://www.toolexuae.com/products",
-  },
-  openGraph: {
-    title: "Products | ToolexUAE",
-    description: "Browse all products available at ToolexUAE.",
-    url: "https://www.toolexuae.com/products",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Products | ToolexUAE",
-    description: "Browse all products available at ToolexUAE.",
-  },
-};
+export async function generateMetadata() {
+  return await getPageSeo("/products");
+}
 
 export default async function ProductsPage({ 
   searchParams 

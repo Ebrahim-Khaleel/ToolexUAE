@@ -1,10 +1,9 @@
-import { Metadata } from 'next';
 import QuoteRequestContent from './QuoteRequestContent';
+import { getPageSeo } from '@/lib/getPageSeo';
 
-export const metadata: Metadata = {
-  title: 'Request Quote | ToolexUAE',
-  description: 'Request a detailed quote for your selected products from ToolexUAE.'
-};
+export async function generateMetadata() {
+  return await getPageSeo("/request-quote");
+}
 
 export default function RequestQuotePage() {
   return <QuoteRequestContent />;

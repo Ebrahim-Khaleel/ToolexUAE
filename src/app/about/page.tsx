@@ -2,27 +2,11 @@ import { Shield, Truck, Clock, Award, Users, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import Image from "next/image";
-import { Metadata } from 'next';
+import { getPageSeo } from "@/lib/getPageSeo";
 
-export const metadata: Metadata = {
-  title: "About Us | ToolexUAE",
-  description: "Learn more about ToolexUAE and how we serve the UAE industrial sector with quality equipment.",
-  robots: "index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1",
-  alternates: {
-    canonical: "https://www.toolexuae.com/about",
-  },
-  openGraph: {
-    title: "About Us | ToolexUAE",
-    description: "Learn more about ToolexUAE and our mission.",
-    url: "https://www.toolexuae.com/about",
-    type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "About Us | ToolexUAE",
-    description: "Learn more about ToolexUAE and our mission.",
-  },
-};
+export async function generateMetadata() {
+  return await getPageSeo("/about");
+}
 
 export default function About() {
   return (
