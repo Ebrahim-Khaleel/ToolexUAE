@@ -11,9 +11,8 @@ import type { Metadata } from "next";
    --------------------------- */
 type ParamsShape = { slug: string };
 
-// Disable caching for this page
-export const revalidate = 0;
-export const dynamic = "force-dynamic";
+// Dynamic rendering every single request (SEO Purpose only - To be removed after SEO works)
+// export const dynamic = "force-dynamic";
 
 async function resolveParams(maybe: unknown): Promise<ParamsShape> {
   const candidate = (maybe as { params?: unknown })?.params ?? maybe;
