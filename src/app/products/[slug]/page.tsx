@@ -12,7 +12,7 @@ import type { Metadata } from "next";
 type ParamsShape = { slug: string };
 
 // Dynamic rendering every single request (SEO Purpose only - To be removed after SEO works)
-// export const dynamic = "force-dynamic";
+export const dynamic = "force-dynamic";
 
 async function resolveParams(maybe: unknown): Promise<ParamsShape> {
   const candidate = (maybe as { params?: unknown })?.params ?? maybe;
