@@ -13,6 +13,7 @@ type ParamsShape = { slug: string };
 
 // Disable caching for this page
 export const revalidate = 0;
+export const dynamic = "force-dynamic";
 
 async function resolveParams(maybe: unknown): Promise<ParamsShape> {
   const candidate = (maybe as { params?: unknown })?.params ?? maybe;
