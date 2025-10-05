@@ -9,7 +9,7 @@ export default function WhatsAppButton() {
     <Button
       onClick={() => {
         window.open(
-          `https://wa.me/971586900124?text=${encodeURIComponent(
+          `https://wa.me/971567570028?text=${encodeURIComponent(
             `Hi, I'd like to inquire about your products`
           )}`,
           '_blank'
