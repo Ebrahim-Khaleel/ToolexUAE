@@ -24,8 +24,9 @@ const Hero = () => {
 
             {/* Main Headline */}
             <h1 className="text-4xl sm:text-6xl font-bold leading-tight text-center md:text-center lg:text-left">
-              Get Reliable
-              <span className="text-red-400 font-bold"> Equipment</span>
+              Get Affordable
+              <br/>
+              <span className="text-red-400 font-bold"> Stackers & Pallets</span>
               <br />
               for Your Warehouse
             </h1>
@@ -33,7 +34,7 @@ const Hero = () => {
             {/* Value Proposition */}
             <div className="space-y-3">
               <p className="text-base sm:text-lg text-blue-100 leading-relaxed text-center md:text-center lg:text-left max-w-lg mx-auto lg:mx-0">
-                Electric Forklifts, Pallet Trucks, and Garage tools delivered across the UAE with warranty and expert support.
+                Electric Stackers and Pallet Trucks delivered across the UAE with warranty and expert support.
               </p>
               <div className="flex items-center justify-center lg:justify-start space-x-2">
                 <Zap className="h-4 w-4 text-yellow-400" aria-hidden="true" />

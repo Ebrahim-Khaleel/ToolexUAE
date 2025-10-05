@@ -41,10 +41,12 @@ const FeaturedProducts = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-blue-950 mb-4">
-            Featured <span className="text-red-500">Equipment</span>
+          <h2 className="text-4xl font-bold mb-4">
+            <span className="text-red-500">Stackers</span>
+            <span className="text-blue-950 font-extrabold"> & </span>
+            <span className="text-red-500">Pallets</span>
           </h2>
-          <p className="text-blue-900 max-w-2xl mx-auto">
+          <p className="text-md text-gray-600 max-w-xl mx-auto">
             Discover our most popular professional equipment trusted by businesses across UAE
           </p>
         </div>

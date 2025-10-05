@@ -197,7 +197,7 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900">Email Us</h4>
-                      <p className="text-sm text-gray-600">info@toolex.ae</p>
+                      <p className="text-sm text-gray-600">enquiry@toolexuae.com</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -206,11 +206,10 @@ export default function ContactForm() {
                     </div>
                     <div>
                       <h4 className="font-medium text-gray-900">Call Us</h4>
-                      <p className="text-sm text-gray-600">+971 58 690 0124</p>
-                      <p className="text-xs text-gray-500">Available 24/7</p>
+                      <p className="text-sm text-gray-600">+971 56 757 0028</p>
                     </div>
                   </div>
-                  <div className="flex items-start space-x-3">
+                  {/* <div className="flex items-start space-x-3">
                     <div className="bg-blue-100 p-1.5 rounded-full">
                       <MapPin className="h-4 w-4 text-blue-700" />
                     </div>
@@ -221,7 +220,7 @@ export default function ContactForm() {
                         Sharjah, UAE
                       </p>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="flex items-start space-x-3">
                     <div className="bg-blue-100 p-1.5 rounded-full">
                       <Clock className="h-4 w-4 text-blue-700" />

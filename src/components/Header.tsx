@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import { Search, Menu, X } from 'lucide-react';
+import { Search, Menu, X, Phone, Mail, MapPin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import Link from 'next/link';
@@ -44,6 +44,37 @@ const Header = () => {
 
   return (
     <>
+    {/* Top bar (non-sticky) */}
+      <div className="hidden lg:block bg-blue-950 text-white py-2 " role="complementary" aria-label="Contact information">
+        <div className="container mx-auto px-4 flex justify-between items-center text-sm">
+          <div className="hidden md:flex items-center space-x-4 text-xs">
+            <div className="hidden md:flex items-center space-x-2">
+              <MapPin className="h-4 w-4" aria-hidden="true" />
+              <span>Serving All UAE</span>
+            </div>
+          </div>
+          <div className="hidden md:flex items-center space-x-4 text-xs">
+            <div className="flex items-center space-x-2 hover:text-red-300 transition-colors">
+              <Phone className="h-4 w-4" aria-hidden="true" />
+              <a
+                  href="tel:+971586900124" 
+                  className="font-medium"
+                >
+                  +971 56 757 0028
+                </a>
+            </div>
+            <div className="flex items-center space-x-2 hover:text-red-300 transition-colors">
+              <Mail className="h-4 w-4" aria-hidden="true" />
+              <a
+                  href="mailto:enquiry@toolexuae.com"
+                  className="font-medium"
+                >
+                  enquiry@toolexuae.com
+                </a>
+            </div>
+          </div>
+        </div>
+      </div>
       {/* Main header (sticky) */}
       <header className="bg-white shadow-lg sticky top-0 z-50" role="banner">
         <SkipToContent />
@@ -63,35 +94,25 @@ const Header = () => {
               />
             </Link>
 
+            {/* Navigation */}
+            <nav className="hidden md:block" role="navigation" aria-label="Main navigation">
+              <div className="flex flex-wrap items-center justify-between">
+                <ul className="flex flex-wrap items-center space-x-4 sm:space-x-8 text-sm sm:text-lg" role="menubar">
+                  <li role="none"><Link href="/products?q=Stacker" className="text-blue-950 hover:text-red-600 font-semibold border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Stackers</Link></li>
+                  <li role="none"><Link href="/products?q=Pallet" className="text-blue-950 hover:text-red-600 font-semibold border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Pallets</Link></li>
+                  <li role="none"><Link href="/products" className="text-blue-950/80 hover:text-red-600 font-semibold border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">All Equipment</Link></li>
+                  <li role="none"><Link href="/about" className="text-blue-950/80 hover:text-red-600 font-semibold border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">About Us</Link></li>
+                  <li role="none"><Link href="/contact" className="text-blue-950/80 hover:text-red-600 font-semibold border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Contact Us</Link></li>          
+                </ul>
+              </div>
+            </nav>
+
             {/* Right side - Search and Actions */}
             <div className="flex items-center space-x-4">
-              {/* Desktop Search */}
-              <div className="hidden md:block w-80">
-                <form onSubmit={handleSearch} className="relative" role="search">
-                  <label htmlFor="desktop-search" className="sr-only">Search equipment</label>
-                  <Input
-                    id="desktop-search"
-                    type="text"
-                    placeholder="Search equipment..."
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    className="pl-4 pr-12 py-2 w-full border-2 border-gray-200 focus:border-blue-950 rounded-lg text-sm"
-                    aria-label="Search equipment"
-                  />
-                  <button 
-                    type="submit"
-                    className="absolute right-1 top-1/2 -translate-y-1/2 bg-blue-950 hover:bg-blue-900 text-white p-1.5 rounded-md"
-                    aria-label="Search"
-                  >
-                    <Search className="h-4 w-4" />
-                  </button>
-                </form>
-              </div>
-
-              {/* Mobile Search Toggle */}
+              {/*Search Toggle */}
               <button
                 onClick={() => setShowMobileSearch(!showMobileSearch)}
-                className="md:hidden p-2 text-blue-950 hover:text-blue-700 transition-colors"
+                className="p-2 text-blue-950 hover:text-red-600 transition-colors"
                 aria-label="Toggle search"
                 aria-expanded={showMobileSearch}
               >
@@ -120,9 +141,9 @@ const Header = () => {
               </Button>
             </div>
 
-            {/* Mobile Search Dropdown */}
+            {/*Search Dropdown */}
             {showMobileSearch && (
-              <div className="md:hidden absolute top-full left-0 right-0 bg-white shadow-lg border-b border-gray-200 z-50 p-4" ref={searchRef}>
+              <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-b border-gray-200 z-50 p-4" ref={searchRef}>
                 <form onSubmit={handleSearch} className="relative" role="search">
                   <label htmlFor="mobile-search" className="sr-only">Search equipment</label>
                   <div className="relative">
@@ -148,26 +169,8 @@ const Header = () => {
               </div>
             )}
 
-            {/* Desktop navigation items are now handled in the navigation bar below */}
           </div>
 
-          {/* Navigation */}
-          <nav className="hidden md:block mt-4 border-t pt-4" role="navigation" aria-label="Main navigation">
-            <div className="flex flex-wrap items-center justify-between">
-              <ul className="flex flex-wrap items-center space-x-4 sm:space-x-8 text-blue-950 text-sm sm:text-base" role="menubar">
-                <li role="none"><Link href="/" className="hover:text-red-600 font-medium border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Home</Link></li>
-                <li role="none"><Link href="/products" className="hover:text-red-600 font-medium border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Equipment</Link></li>
-                <li role="none"><Link href="/about" className="hover:text-red-600 font-medium border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">About</Link></li>
-                <li role="none"><Link href="/contact" className="hover:text-red-600 font-medium border-b-2 border-transparent hover:border-red-600 pb-1 transition-all" role="menuitem">Contact</Link></li>
-              </ul>
-              <div className="flex items-center space-x-2 text-sm">
-                <span className="text-blue-950">Popular:</span>
-                <Link href="/products?q=Stacker" className="bg-gray-100 hover:bg-red-50 hover:text-red-600 px-2 py-1 rounded text-xs transition-colors">Stacker</Link>
-                <Link href="/products?q=Pallet" className="bg-gray-100 hover:bg-red-50 hover:text-red-600 px-2 py-1 rounded text-xs transition-colors">Pallet</Link>
-                <Link href="/products?q=Jack" className="bg-gray-100 hover:bg-red-50 hover:text-red-600 px-2 py-1 rounded text-xs transition-colors">Jack</Link>
-              </div>
-            </div>
-          </nav>
         </div>
 
         {/* Mobile Hamburger Menu Overlay */}
@@ -185,7 +188,9 @@ const Header = () => {
               </button>
               <nav className="mt-10 flex flex-col gap-6" role="navigation" aria-label="Mobile navigation">
                 <Link href="/" className="text-blue-950/60 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>Home</Link>
-                <Link href="/products" className="text-blue-950 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>Equipment</Link>
+                <Link href="/products?q=Stacker" className="text-blue-950 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>Stackers</Link>
+                <Link href="/products?q=Pallet" className="text-blue-950 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>Pallets</Link>
+                <Link href="/products" className="text-blue-950 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>All Equipment</Link>
                 <Link href="/about" className="text-blue-950/60 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>About</Link>
                 <Link href="/contact" className="text-blue-950/60 text-lg font-semibold hover:text-red-600" onClick={closeMobileMenu}>Contact</Link>
               </nav>

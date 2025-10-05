@@ -1,36 +1,27 @@
 import { Card, CardContent } from "./ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
+import Link from 'next/link';
+import { Button } from "./ui/button";
+import { ArrowRight } from "lucide-react";
 
 const testimonials = [
   {
-    name: "Ahmed R.",
-    company: "Logistics Manager, Dubai",
-    text: "Toolex UAE delivered our equipment on time and provided excellent after-sales support. Highly recommended for any warehouse needs!",
+    name: "Ahmed Abdul Kareem",
+    company: "Procurement Lead, SAT Enterprise",
+    text: "Our warehouse saved 10% in handling costs after switching to ToolexUAE's electric stackers, affordable, durable, and backed by prompt, reliable service every time.",
     photo: "/public/alberty1.png",
   },
   {
-    name: "Sarah M.",
-    company: "Procurement Lead, Abu Dhabi",
-    text: "The quality of the tools and the professionalism of the team exceeded our expectations. We will definitely order again!",
+    name: "Unai Sharook",
+    company: "Procurement Lead, Bay Marine",
+    text: "ToolexUAE's pallet trucks delivered immediate efficiency gains. affordable pricing, robust build, and responsive after-sales gave our operations confidence and zero downtime.",
     photo: "/public/full-shot-man-carrying-pallet-truck.jpg",
   },
   {
-    name: "Vikram S.",
-    company: "Workshop Supervisor, Sharjah",
-    text: "Great prices, genuine products, and fast delivery. Toolex UAE is our go-to supplier for all industrial equipment.",
+    name: "Shakir Moosan",
+    company: "Owner, Capsule Auto Garage",
+    text: "Choosing ToolexUAE for electric stackers was a smart investment. exceptional value, quick delivery, and dependable support that keeps our fleet productive daily.",
     photo: "/public/MNX-UK.png",
-  },
-  {
-    name: "Fatima A.",
-    company: "Operations Head, Al Ain",
-    text: "Exceptional customer service and reliable equipment. Toolex UAE made our procurement process seamless.",
-    photo: "/public/Chester-Logo.png",
-  },
-  {
-    name: "Omar K.",
-    company: "Plant Manager, Ras Al Khaimah",
-    text: "We appreciate the fast delivery and the quality of the products. Toolex UAE is a trusted partner.",
-    photo: "/public/Space-Logo-01.png",
   },
 ];
 
@@ -42,8 +33,8 @@ const Testimonials = () => {
           <h2 className="text-3xl font-bold text-blue-950 mb-4">
             What Our <span className="text-red-500">Customers Say</span>
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Real feedback from businesses across the UAE who trust Toolex UAE for their equipment and tool needs.
+          <p className="text-md text-gray-600 max-w-xl mx-auto">
+            Real feedback from businesses across the UAE who trust Toolex.
           </p>
         </div>
         <div className="relative w-full overflow-x-hidden mask-gradient">
@@ -51,7 +42,7 @@ const Testimonials = () => {
             {[...testimonials, ...testimonials].map((testimonial, idx) => (
               <Card key={idx} className="shadow-lg hover:shadow-xl transition-shadow min-w-[320px] max-w-xs mx-3 flex-1">
                 <CardContent className="p-8 flex flex-col h-full justify-between text-center">
-                  <p className="text-blue-950 text-base font-medium text-left mb-2">“{testimonial.text}”</p>
+                  <p className="text-blue-950 text-base font-semibold text-left mb-4">“{testimonial.text}”</p>
                   <div className="mt-auto flex items-center">
                     <Avatar className="h-8 w-8 mb-2 mt-2">
                       <AvatarImage src={testimonial.photo} alt={testimonial.name} />
@@ -73,7 +64,7 @@ const Testimonials = () => {
             100% { transform: translateX(-50%); }
           }
           .animate-testimonials-scroll {
-            animation: testimonials-scroll 50s linear infinite;
+            animation: testimonials-scroll 40s linear infinite;
           }
           .mask-gradient {
             -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
@@ -81,6 +72,14 @@ const Testimonials = () => {
           }
         `}</style>
       </div>
+      <div className="text-center mt-12">
+          <Link href="/products">
+            <Button size="lg" variant="outline" className="bg-red-500 text-white hover:bg-red-700 transform hover:scale-105 transition-all">
+              Start Your Quote
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+          </Link>
+        </div>
     </section>
   );
 };

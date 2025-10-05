@@ -37,7 +37,7 @@ const QuickCartOffCanvas = () => {
           )}
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full sm:max-w-lg bg-white">
+      <SheetContent className="max-w-lg bg-white">
         <SheetHeader>
           <SheetTitle className="flex items-center gap-2 text-blue-950">
             <ShoppingCart className="h-5 w-5" />
