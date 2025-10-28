@@ -83,7 +83,8 @@ const Hero = () => {
               alt="Professional Machinery & Equipment"
               width={600}
               height={400}
-              className="rounded-lg shadow-2xl w-full h-48 sm:h-80 object-cover"
+              className="rounded-lg shadow-2xl w-full object-cover aspect-[3/2]"
+              style={{ height: 'auto' }}
             />
             <div className="absolute -bottom-4 -right-4 bg-white text-blue-950 p-3 sm:p-4 rounded-lg shadow-xl border-2 border-red-400">
               <div className="text-center">

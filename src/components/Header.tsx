@@ -89,7 +89,7 @@ const Header = () => {
                 alt="Toolex UAE" 
                 width={120} 
                 height={32} 
-                className="h-8 w-auto"
+                style={{ width: '120px', height: '32px' }}
                 priority
               />
             </Link>

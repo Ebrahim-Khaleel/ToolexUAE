@@ -48,7 +48,7 @@ const ProductCard = ({ product, variant = 'default', showDescription = false }: 
     <Card className={`group hover:shadow-xl transition-all duration-300 border-2 border-gray-100 hover:border-red-200 overflow-hidden h-full flex flex-col ${
       variant === 'featured' ? '' : 'min-h-[400px]'
     }`}>
-      <div className="relative overflow-hidden aspect-[4/3]">
+      <div className="relative overflow-hidden aspect-[4/3]" style={{ position: 'relative' }}>
         <Link href={`/products/${validSlug}`}>
           <Image
             src={product.imageUrl}

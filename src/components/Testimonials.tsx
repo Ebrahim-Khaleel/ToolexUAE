@@ -9,19 +9,19 @@ const testimonials = [
     name: "Ahmed Abdul Kareem",
     company: "Procurement Lead, SAT Enterprise",
     text: "Our warehouse saved 10% in handling costs after switching to ToolexUAE's electric stackers, affordable, durable, and backed by prompt, reliable service every time.",
-    photo: "/public/alberty1.png",
+    photo: "/alberty1.png",
   },
   {
     name: "Unai Sharook",
     company: "Procurement Lead, Bay Marine",
     text: "ToolexUAE's pallet trucks delivered immediate efficiency gains. affordable pricing, robust build, and responsive after-sales gave our operations confidence and zero downtime.",
-    photo: "/public/full-shot-man-carrying-pallet-truck.jpg",
+    photo: "/full-shot-man-carrying-pallet-truck.jpg",
   },
   {
     name: "Shakir Moosan",
     company: "Owner, Capsule Auto Garage",
     text: "Choosing ToolexUAE for electric stackers was a smart investment. exceptional value, quick delivery, and dependable support that keeps our fleet productive daily.",
-    photo: "/public/MNX-UK.png",
+    photo: "/MNX-UK.png",
   },
 ];
 

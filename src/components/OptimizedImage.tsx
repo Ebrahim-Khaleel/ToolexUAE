@@ -41,7 +41,7 @@ const OptimizedImage: React.FC<OptimizedImageProps> = ({
   const imageSrc = imageError ? fallbackSrc : src;
 
   return (
-    <div className={cn('relative overflow-hidden', className)}>
+    <div className={cn('relative overflow-hidden', className)} style={fill ? { position: 'relative' } : undefined}>
       <Image
         src={imageSrc}
         alt={alt}

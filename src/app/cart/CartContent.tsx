@@ -72,13 +72,14 @@ export default function CartContent() {
                     <div className="mt-2 flex items-center space-x-4">
                       <div className="flex items-center border rounded-md">
                         <button
-                          onClick={() =>
-                            handleUpdateQuantity(
-                              item._id,
-                              Math.max(1, (item.quantity || 0) - 1),
-                              item.name
-                            )
-                          }
+                          onClick={() => {
+                            const newQty = (item.quantity || 0) - 1;
+                            if (newQty <= 0) {
+                              handleRemoveFromCart(item._id, item.name);
+                            } else {
+                              handleUpdateQuantity(item._id, newQty, item.name);
+                            }
+                          }}
                           className="px-3 py-1 text-gray-600 hover:bg-gray-100"
                         >
                           <Minus className="h-4 w-4" />

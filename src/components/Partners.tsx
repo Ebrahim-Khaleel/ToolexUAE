@@ -92,7 +92,8 @@ const Partners = () => {
                 alt={partner.name}
                 width={120}
                 height={64}
-                className="h-10 sm:h-16 mx-4 sm:mx-8 w-auto object-contain flex-shrink-0"
+                className="mx-4 sm:mx-8 max-h-16 object-contain flex-shrink-0"
+                style={{ maxHeight: '4rem', height: 'auto', width: 'auto' }}
               />
             ))}
           </div>

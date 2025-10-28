@@ -17,8 +17,8 @@ export default function WhatsAppButton() {
       }}
       className="fixed z-50 bottom-4 right-4 md:bottom-6 md:right-6 bg-green-500 hover:bg-green-600 text-white rounded-full shadow-lg p-3 md:p-6 flex items-center justify-center transition-all duration-200 text-sm md:text-base"
     >
-      <span className="text-xs md:text-base">Chat with us</span>
-      <FontAwesomeIcon icon={faWhatsapp} className="h-12 w-12 md:h-12 md:w-12" />
+      Chat with us
+      <FontAwesomeIcon icon={faWhatsapp} className="h-6 w-6 md:h-7 md:w-7" />
     </Button>
   );
 }

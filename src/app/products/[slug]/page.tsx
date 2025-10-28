@@ -5,14 +5,15 @@ import { notFound } from "next/navigation";
 import type { Product } from "@/types";
 import { ProductDetailClient } from "@/components/ProductDetailClient";
 import type { Metadata } from "next";
+import Script from "next/script";
 
 /* ---------------------------
    Utility: normalize/validate params
    --------------------------- */
 type ParamsShape = { slug: string };
 
-// Dynamic rendering every single request (SEO Purpose only - To be removed after SEO works)
-export const dynamic = "force-dynamic";
+// Enable ISR for better performance while keeping content fresh
+export const revalidate = 3600; // Revalidate every hour (3600 seconds)
 
 async function resolveParams(maybe: unknown): Promise<ParamsShape> {
   const candidate = (maybe as { params?: unknown })?.params ?? maybe;
@@ -127,20 +128,51 @@ export default async function ProductDetailPage(props: unknown) {
     notFound();
   }
 
+  // Generate structured data (JSON-LD) for SEO
+  const structuredData = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    name: product.name,
+    description: product.description,
+    image: product.imageUrl,
+    category: product.category,
+    brand: {
+      '@type': 'Brand',
+      name: 'ToolexUAE'
+    },
+    offers: {
+      '@type': 'Offer',
+      priceCurrency: 'AED',
+      availability: product.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+      url: `https://www.toolexuae.com/products/${slug}`
+    },
+    url: `https://www.toolexuae.com/products/${slug}`,
+    sku: product._id
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-6">
-          <Link
-            href="/products"
-            className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
-          >
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            Back to Products
-          </Link>
+    <>
+      {/* Structured Data for SEO */}
+      <Script
+        id="product-structured-data"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
+      
+      <div className="min-h-screen bg-gray-50">
+        <div className="container mx-auto px-4 py-8">
+          <div className="mb-6">
+            <Link
+              href="/products"
+              className="inline-flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to Products
+            </Link>
+          </div>
+          <ProductDetailClient product={product} />
         </div>
-        <ProductDetailClient product={product} />
       </div>
-    </div>
+    </>
   );
 }

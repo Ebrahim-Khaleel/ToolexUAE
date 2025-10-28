@@ -7,34 +7,68 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { toast } from 'sonner';
+import config from "@/lib/config";
 
 export default function ContactForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setError(null);
     
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      const formData = new FormData(e.target as HTMLFormElement);
       
-      // Reset form
-      if (formRef.current) {
-        formRef.current.reset();
+      const data = {
+        access_key: config.web3forms.accessKey,
+        subject: `Contact Form: ${formData.get('subject')}`,
+        name: `${formData.get('firstName')} ${formData.get('lastName')}`,
+        email: formData.get('email'),
+        phone: formData.get('phone') || 'Not provided',
+        message: formData.get('message'),
+      };
+
+      const response = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        // Reset form
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+        
+        // Show success message
+        setIsSubmitted(true);
+        toast.success('Message sent successfully!', {
+          description: 'We will get back to you within 24 hours.',
+        });
+        
+        // Hide success message after 5 seconds
+        setTimeout(() => {
+          setIsSubmitted(false);
+        }, 5000);
+      } else {
+        throw new Error(result.message || 'Failed to send message');
       }
-      
-      // Show success message
-      setIsSubmitted(true);
-      
-      // Hide success message after 5 seconds
-      setTimeout(() => {
-        setIsSubmitted(false);
-      }, 5000);
     } catch (error) {
       console.error('Error submitting form:', error);
+      const errorMessage = error instanceof Error ? error.message : 'Failed to send message. Please try again.';
+      setError(errorMessage);
+      toast.error('Error', {
+        description: errorMessage,
+      });
     } finally {
       setIsSubmitting(false);
     }
@@ -77,6 +111,14 @@ export default function ContactForm() {
                   </AlertDescription>
                 </Alert>
               )}
+              {error && (
+                <Alert className="mb-6 bg-red-50 border-red-200">
+                  <AlertTitle>Error</AlertTitle>
+                  <AlertDescription>
+                    {error}
+                  </AlertDescription>
+                </Alert>
+              )}
               <form ref={formRef} onSubmit={handleSubmit} className="space-y-4 sm:space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4">
                   <div>
@@ -85,6 +127,7 @@ export default function ContactForm() {
                     </label>
                     <Input 
                       type="text" 
+                      name="firstName"
                       required 
                       className="w-full"
                       placeholder="John"
@@ -96,6 +139,7 @@ export default function ContactForm() {
                     </label>
                     <Input 
                       type="text" 
+                      name="lastName"
                       required 
                       className="w-full"
                       placeholder="Doe"
@@ -108,6 +152,7 @@ export default function ContactForm() {
                   </label>
                   <Input 
                     type="email" 
+                    name="email"
                     required 
                     className="w-full"
                     placeholder="john@example.com"
@@ -119,6 +164,7 @@ export default function ContactForm() {
                   </label>
                   <Input 
                     type="tel" 
+                    name="phone"
                     className="w-full"
                     placeholder="+971 XX XXX XXXX"
                   />
@@ -129,6 +175,7 @@ export default function ContactForm() {
                   </label>
                   <Input 
                     type="text" 
+                    name="subject"
                     required 
                     className="w-full"
                     placeholder="Equipment inquiry"
@@ -139,6 +186,7 @@ export default function ContactForm() {
                     Message *
                   </label>
                   <Textarea 
+                    name="message"
                     required 
                     rows={6}
                     className="w-full"
