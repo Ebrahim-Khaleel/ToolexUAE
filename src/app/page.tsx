@@ -13,7 +13,6 @@ export default function Home() {
       <Partners />
       <FeaturedProducts />
       <Testimonials />
-
       {/* Sticky WhatsApp Button */}
       <WhatsAppButton />
     </>
